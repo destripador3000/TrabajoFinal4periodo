@@ -46,7 +46,7 @@ def registrar_prestamo():
         if not c_estudiante and n_estudiante:
             flash('El estudiante no existe en la base de datos.', 'danger')
             return "El estudiante no existe en la base de datos."
-        
+        libroCodigo = int(libroCodigo) 
         libro = Libro.query.filter_by(codigo=libroCodigo).first()
         if not libro:
             flash('El libro no existe en la base de datos.', 'danger')
@@ -91,43 +91,35 @@ def eliminarPrestamos():
         # Validar que el campo no esté vacío y sea numérico
         if not prestamo_id or not prestamo_id.isdigit():
             flash('Por favor, ingresa un ID válido.', 'danger')
-            return redirect(url_for('eliminarPrestamos'))
+            return redirect(url_for('prestamos'))
         # Buscar el préstamo en la base de datos
         prestamo = Prestamo.query.filter_by(id=prestamo_id).first()
         if prestamo:
             # Eliminar el préstamo
             db.session.delete(prestamo)
             db.session.commit()
-            flash('Préstamo eliminado con éxito.', 'success')
+            return 'Préstamo eliminado con éxito.'
         else:
             # Si no se encuentra el préstamo
-            flash('Préstamo no encontrado.', 'danger')
-        return redirect(url_for('eliminarPrestamos'))
+            return 'Préstamo no encontrado.'
+      
     # Renderizar el formulario de eliminación
-    return render_template('eliminarPrestamos.html')
-
+    return render_template('consultarPrestamo.html')
 
 @app.route('/consultarPrestamo', methods=['GET', 'POST'])
 def consultarPrestamo():
-    if request.method == 'POST':
-        # Mensaje de éxito (puedes ajustarlo si es necesario)
-        flash('Préstamo consultado con éxito.', 'success')
-        return redirect(url_for('index'))
-    
-    # Consultar los datos de las tablas
+    # Consultar únicamente los datos de la tabla Prestamo
     prestamos = db.session.query(
-        Prestamo.id,
-        Prestamo.fecha,
-        Estudiante.nombre.label('usuario'),
-        Libro.nombre.label('libro'),
-        Libro.disponibilidad
-    ).join(Estudiante, Prestamo.usuario == Estudiante.nombre) \
-     .join(Libro, Prestamo.libro == Libro.codigo).all()
-
-    # Enviar los datos a la plantilla HTML
+        Prestamo.id.label('id'),
+        Prestamo.libro.label('libro'),  # Aquí obtienes el identificador del libro
+        Prestamo.usuario.label('usuario'),
+        Prestamo.fecha.label('fecha')
+    ).all()
+    
+    # Renderizar la plantilla con los datos
     return render_template('consulta.html', prestamos=prestamos)
 
-
+   
 @app.route('/modificarPrestamo', methods=['GET', 'POST'])
 def modificarPrestamo():
     if request.method == 'POST':

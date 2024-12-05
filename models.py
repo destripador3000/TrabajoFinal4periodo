@@ -29,6 +29,7 @@ class Multa(db.Model):
         return f"<Multa {self.libro} - {self.usuario}>"
 
 class Libro(db.Model):
+    __tablename__ = 'libro'
     id = db.Column(db.Integer, primary_key=True)  # ID único para cada libro
     codigo = db.Column(db.String(100), unique=True, nullable=False)  # Código único del libro
     nombre = db.Column(db.String(200), nullable=False)  # Título del libro
