@@ -1,0 +1,58 @@
+body {
+     /* Cambia la ruta si es necesario */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    
+}
+
+/* Contenedor centrado */
+.d-flex-center {
+    min-height: 100vh;
+}
+
+/* Estilo para el cuadro blanco */
+.bg-white {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    box-shadow: 8px 8px 15px black;
+}
+/* Fondo general de la página */
+.background-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Contenedor principal para centrar el contenido */
+.content-wrapper {
+    min-height: 100vh;
+}
+
+/* Caja con el contenido centrado */
+.content-box {
+    background-color: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 8px 8px 15px black;
+    text-align: center;
+}
+.imagen {
+    position: absolute;
+    bottom: 20px; 
+    right: 70px;   
+    width: 120px;  
+    height: auto;  
+    border-radius: 8px ;
+    box-shadow: 10px 10px 10px black;
+}
