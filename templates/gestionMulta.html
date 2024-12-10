@@ -7,21 +7,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body class="background-image" style="background-image: url('static/images/libro1.jpeg');">
-
     <!-- Contenedor para centrar el contenido -->
     <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div class="text-center content-box">
-            <h1>eliminar libro</h1>
-            <form action="{{ url_for('eliminarLibro') }}" method="POST">
-                <input type="number" class="form-control mb-3" name="codigo" placeholder="Código de libro" required>
-                <button type="submit" class="btn btn-danger">Eliminar libro</button>
+            <h1>Gestion de multas</h1>
+            <form action="{{ url_for('gestionMulta') }}" method="POST">
+                <a href="{{url_for('registrar_multa')}}" class="btn btn-danger">registrar multa</a>
+                <a href="{{url_for('consultarMulta')}}" class="btn btn-danger">consultar multa</a>
+                
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
-            <a href="{{ url_for('gestionLibro') }}" class="btn btn-light">volver</a>
-
-
             
         </div>
     </div>

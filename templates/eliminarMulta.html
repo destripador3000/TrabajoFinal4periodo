@@ -14,12 +14,12 @@
     <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div class="text-center content-box">
             <h1>eliminar libro</h1>
-            <form action="{{ url_for('eliminarLibro') }}" method="POST">
+            <form action="{{ url_for('eliminarMulta') }}" method="POST">
                 <input type="number" class="form-control mb-3" name="codigo" placeholder="Código de libro" required>
-                <button type="submit" class="btn btn-danger">Eliminar libro</button>
+                <button type="submit" class="btn btn-danger">Eliminar multa</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
-            <a href="{{ url_for('gestionLibro') }}" class="btn btn-light">volver</a>
+            <a href="{{ url_for('gestionMulta') }}" class="btn btn-light">volver</a>
 
 
             

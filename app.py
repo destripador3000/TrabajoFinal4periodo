@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from config import Config
 from datetime import datetime
-from models import Prestamo, db, Libro, Usuario, Estudiante  # Importa db desde models.py
+from models import Prestamo, db, Libro, Usuario, Estudiante, Multa # Importa db desde models.py
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -55,7 +55,6 @@ def registrar_prestamo():
         db.session.add(nuevo_prestamo)
         db.session.commit()
 
-        alertCrearPrestamo()
         flash('Préstamo registrado con éxito.', 'success')
         return redirect(url_for('registrar_prestamo'))
 
@@ -68,8 +67,53 @@ def registrar_prestamo():
 def registrar_multa():
     if request.method == 'POST':
         flash('Multa registrada con éxito.')
-        return redirect(url_for('index'))
     return render_template('multas.html')
+
+@app.route('/gestionMulta', methods=['GET', 'POST'])
+def gestionMulta():
+    if request.method == 'POST':
+        flash('Multa registrada con éxito.')
+        return redirect(url_for('index'))
+    return render_template('gestionMulta.html')
+
+@app.route('/eliminarMulta', methods=['GET', 'POST'])
+def eliminarMulta():
+    if request.method == 'POST':
+        # Obtener el código del libro desde el formulario
+        codigo = request.form.get('codigo')  # El campo en el formulario es "Préstamo"
+        # Validar que el código no esté vacío
+        if not codigo:
+            return "Por favor ingresa un código de libro válido", 400
+        try:
+            # Buscar el libro en la base de datos por código
+            libro = Libro.query.filter_by(codigo=codigo).first()  # Filtrar por el código
+            # Verificar si el libro existe
+            if not libro:
+                return "El libro con ese código no existe", 404
+            # Eliminar el libro
+            db.session.delete(libro)
+            db.session.commit()  # Realizar la transacción en la base de datos
+            flash("El libro ha sido eliminado", "danger")
+            return redirect(url_for('index'))  # Redirigir a la página principal después de eliminar el libro
+        except Exception as e:
+            # Si ocurre un error, devolver un mensaje
+            return f"Error al eliminar el libro: {str(e)}", 500
+    return render_template('eliminarMulta.html')
+
+@app.route('/consultarMulta', methods=['GET', 'POST'])
+def consultarMulta():
+    # Consultar únicamente los datos de la tabla Prestamo
+    multa = db.session.query(
+        Multa.id.label('id'),
+        Multa.libro.label('libro'),  # Aquí obtienes el identificador del libro
+        Multa.usuario.label('usuario'),
+        Multa.codigo.label('codigo'),
+        Multa.fecha_creacion.label('fecha_creacion')
+
+    ).all()
+    
+    # Renderizar la plantilla con los datos
+    return render_template('consultarMulta.html', multa=multa)
 
 
 @app.route('/informacionLibro', methods=['GET', 'POST'])

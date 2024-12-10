@@ -15,12 +15,13 @@
         <div class="text-center bg-white">
             <h1>Multas</h1>
             <form action="{{ url_for('registrar_multa') }}" method="POST">
-                <input type="text" class="form-control mb-3" name="libro" placeholder="id Multa" required>
-                <input type="text" class="form-control mb-3" name="usuario" placeholder="id Estudiante" required>
-                <input type="text" class="form-control mb-3" name="Código" placeholder="código libro" required>
-                <input type="text" class="form-control mb-3" name="Código" placeholder="código préstamo" required>
+                <input type="text" class="form-control mb-3" name="id" placeholder="id Multa" required>
+                <input type="text" class="form-control mb-3" name="libro" placeholder="id libro" required>
+                <input type="text" class="form-control mb-3" name="usuario" placeholder="usuario" required>
+                <input type="text" class="form-control mb-3" name="codigo" placeholder="código" required>
+                <input type="text" class="form-control mb-3" name="fecha_creacion" placeholder="código préstamo" required>
 
-                <button type="submit" class="btn btn-danger">Eliminar Multa</button>
+                <button type="submit" class="btn btn-danger">registrar Multa</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
 
