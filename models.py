@@ -23,10 +23,13 @@ class Multa(db.Model):
     libro = db.Column(db.String(150), nullable=False)
     usuario = db.Column(db.String(150), nullable=False)
     codigo = db.Column(db.String(50), nullable=False)
-    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    fecha_creacion = db.Column(db.Date)
 
-    def __repr__(self):
-        return f"<Multa {self.libro} - {self.usuario}>"
+    def __init__(self, libro, usuario,codigo, fecha_creacion):
+        self.libro = libro
+        self.usuario = usuario
+        self.codigo=codigo
+        self.fecha_creacion = fecha_creacion
 
 class Libro(db.Model):
     __tablename__ = 'libro'
