@@ -49,7 +49,8 @@ def registrar_prestamo():
         libroCodigo = int(libroCodigo) 
         libro = Libro.query.filter_by(codigo=libroCodigo).first()
         if not libro:
-            pass
+            flash('El libro no existe en la base de datos.', 'danger')
+            return redirect(url_for('registrar_prestamo'))
 
         nuevo_prestamo = Prestamo(libro=libro.codigo, usuario=c_estudiante.nombre, fecha=fecha)
         db.session.add(nuevo_prestamo)
@@ -66,8 +67,47 @@ def registrar_prestamo():
 @app.route('/registrar_multa', methods=['GET', 'POST'])
 def registrar_multa():
     if request.method == 'POST':
-        flash('Multa registrada con éxito.')
-    return render_template('multas.html')
+        libro = request.form.get('libro')  # Código del libro
+        estudiante = request.form.get('estudiante')  # Nombre del estudiante
+        codigo = request.form.get('codigo')  # Código del estudiante
+        fecha_creacion = request.form.get('fecha_creacion')  # Fecha de creación de la multa
+
+        # Verificar si la fecha de creación es válida
+        try:
+            fecha_creacion = datetime.strptime(fecha_creacion, '%Y-%m-%d').date()
+        except ValueError:
+            flash('Fecha de creación no válida. Usa el formato YYYY-MM-DD.', 'danger')
+            return redirect(url_for('registrar_multa'))
+
+        # Verificar si el código del estudiante existe en la base de datos
+        libro1 = Libro.query.filter_by(codigo=codigo).first()  # Consultamos por el código del estudiante
+        estudiante1 = Estudiante.query.filter_by(codigo=estudiante).first()  # Consultamos por el nombre del estudiante
+
+        if not libro1 or not estudiante1:  # Si no existe el estudiante
+            flash('El estudiante no existe en la base de datos.', 'danger')
+            return render_template('multas.html')
+
+        # Verificar si el libro existe
+        libro = Libro.query.filter_by(codigo=libro).first()
+        if not libro:
+            flash('El libro no existe en la base de datos.', 'danger')
+            return render_template('multas.html')
+
+        # Crear la nueva multa
+        nueva_multa = Multa(libro=libro, usuario=estudiante, codigo=codigo, fecha_creacion=fecha_creacion)
+        db.session.add(nueva_multa)
+        db.session.commit()
+
+        # Mensaje de éxito
+        flash('Multa registrada con éxito.', 'success')
+        return redirect(url_for('consultarMulta'))  # Redirigir a la vista de consultar multas
+        
+    multas = Multa.query.all()
+        
+    return render_template('multas.html', multas=multas)
+
+    # Si es una solicitud GET, solo se renderiza el formulario
+ 
 
 @app.route('/gestionMulta', methods=['GET', 'POST'])
 def gestionMulta():
