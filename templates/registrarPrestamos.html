@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="background-image" style="background-image: url('static/images/libro1.jpeg');">
+    <script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
     <!-- Contenedor para centrar el contenido -->
     <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div class="text-center content-box">
@@ -18,7 +19,7 @@
                 <input type="text" class="form-control mb-3" name="nombre" placeholder="Nombre Estudiante"  required > <!-- Se completa el nombre si el estudiante existe -->
 
                 <input type="date" class="form-control mb-3" name="fecha" placeholder="Fecha (YYYY-MM-DD)" required>
-                <button type="submit" class="btn btn-danger">Registrar Préstamo</button>
+                <button type="submit" onclick="alertCrearPrestamo()" class="btn btn-danger">Registrar Préstamo</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
             <a href="{{ url_for('registrar_prestamo') }}" class="btn btn-light">Volver</a>

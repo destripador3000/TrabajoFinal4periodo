@@ -49,10 +49,11 @@ body {
 }
 .imagen {
     position: absolute;
-    bottom: 20px; 
-    right: 70px;   
-    width: 120px;  
-    height: auto;  
-    border-radius: 8px ;
-    box-shadow: 10px 10px 10px black;
+    top: 20px;       /* Posiciona el logo 20px desde la parte superior */
+    right: 3px;     /* Posiciona el logo 20px desde el borde derecho */
+    width: 85px;    /* Ancho del logo */
+    height: auto;    /* Mantiene la proporción del logo */
+    border-radius: 8px;  /* Bordes redondeados */
+    box-shadow: 10px 10px 10px black;  /* Sombra alrededor del logo */
 }
+

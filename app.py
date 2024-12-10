@@ -49,13 +49,13 @@ def registrar_prestamo():
         libroCodigo = int(libroCodigo) 
         libro = Libro.query.filter_by(codigo=libroCodigo).first()
         if not libro:
-            flash('El libro no existe en la base de datos.', 'danger')
-            return 'No existe el libro en la base de datos.'
+            pass
 
         nuevo_prestamo = Prestamo(libro=libro.codigo, usuario=c_estudiante.nombre, fecha=fecha)
         db.session.add(nuevo_prestamo)
         db.session.commit()
 
+        alertCrearPrestamo()
         flash('Préstamo registrado con éxito.', 'success')
         return redirect(url_for('registrar_prestamo'))
 
@@ -219,6 +219,20 @@ def consultarLibro():
         return redirect(url_for('index')) 
     return render_template('consultarLibro.html')
 
+
+@app.route('/consultarLibro2', methods=['GET', 'POST'])
+def consultarLibro2():
+    # Consultar únicamente los datos de la tabla Prestamo
+    libro = db.session.query(
+        Libro.id.label('id'),
+        Libro.codigo.label('codigo'),
+        Libro.nombre.label('nombre'),  # Aquí obtienes el identificador del libro
+        Libro.autor.label('autor'),
+        Libro.disponibilidad.label('disponibilidad'),
+    ).all()
+    
+    # Renderizar la plantilla con los datos
+    return render_template('consultarLibro2.html', libro=libro)
 
 
 if __name__ == '__main__':

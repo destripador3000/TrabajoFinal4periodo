@@ -14,7 +14,7 @@
             <h1 class="title">Gestión Bibliotecaria</h1>
             <form action="{{url_for('buscarLibro')}}" method="POST">
                 <div class="input-group">
-                    <input type="text" class="form-control " name="nombre" placeholder="Buscar Libro por su nombre" aria-label="Recipient's username with two button addons">
+                    <input type="text" class="form-control " name="nombre" placeholder="Buscar Libro por su nombre" required aria-label="Recipient's username with two button addons">
                     <button class="btn btn-danger" type="submit">Buscar</button>
                 </div>
             </form>

@@ -10,39 +10,42 @@
 <body class="background-image" style="background-image: url('static/images/libreria1.jpeg')">
     <div class="container mt-5">
         <div class="text-center">
-            <h1 class="mb-4 " style="color: aliceblue;">Lista de Préstamos</h1>
+            <h1 class="mb-4 " style="color: aliceblue;">Lista de libros</h1>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>ID Préstamo</th>
+                            <th>ID libro</th>
+                            <th>codigo</th>
                             <th>Libro</th>
-                            <th>Usuario</th>
-                            <th>Fecha</th>
-                            
-                            
+                            <th>autor</th>
+                            <th>disponibilidad</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        {% for prestamo in prestamos %}
+                        {% for libro in libro %}
                         <tr>
-                            <td>{{ prestamo.id }}</td>
-                            <td>{{ prestamo.libro }}</td>
-                            <td>{{ prestamo.usuario }}</td>
-                            <td>{{ prestamo.fecha }}</td>
-                            
+                            <td>{{ libro.id }}</td>
+                            <td>{{ libro.codigo }}</td>
+                            <td>{{ libro.nombre }}</td>
+                            <td>{{ libro.autor }}</td>
+                            <td>{{ libro.disponibilidad }}</td>
+
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                <form action="{{ url_for('eliminarPrestamos') }}" method="POST">
+                <form action="{{ url_for('eliminarLibro') }}" method="POST">
                     <input type="number" class="form-control mb-3" name="codigo" placeholder="ID del préstamo (Para eliminar)" required>
-                    <button type="submit" class="btn btn-danger">Eliminar Préstamo</button>
+                    <button type="submit" class="btn btn-danger">Eliminar libro</button>
                 </form>  
             </div>                   
             <a href="{{ url_for('index') }}" class="btn btn-danger mt-3">Volver</a>
         </div>
     </div>
-    <img class="imagen mt-4" src="{{ url_for('static', filename='images/univalle.png') }}" alt="Logo Univalle">
+
+    <!-- Logo con la clase imagen -->
+    <img class="imagen" src="{{ url_for('static', filename='images/univalle.png') }}" alt="Logo Univalle">
 </body>
 </html>
