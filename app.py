@@ -16,7 +16,7 @@ with app.app_context():
 @app.route('/', methods=['GET', 'POST'])
 def logginPrincipal():
     if request.method == 'POST':
-        # Aquí se podrían validar las credenciales más tarde.
+        # Aquí se validan las credenciales
         return redirect(url_for('index'))  # Redirigir a la página principal después del login.
     return render_template('loggin.html')
 @app.route('/index')
@@ -29,7 +29,7 @@ def registrar_prestamo():
         libroCodigo = request.form.get('libro')
         codigo = request.form.get('codigo')  # El código del estudiante
         nombre=request.form.get('nombre') #Nombre del estudiante
-        fecha = request.form.get('fecha')
+        fecha = request.form.get('fecha') #fecha de creación
 
         # Validar la fecha
         try:
@@ -40,11 +40,11 @@ def registrar_prestamo():
 
         # Verificar si el código del estudiante existe en la base de datos
         c_estudiante = Estudiante.query.filter_by(codigo=codigo).first()  # Consultamos por el código del estudiante
-        n_estudiante = Estudiante.query.filter_by(nombre=nombre).first() 
-      
+        n_estudiante = Estudiante.query.filter_by(nombre=nombre).first()  # Consultamos por el nombre del estudiante
+
     
         if not c_estudiante and n_estudiante:
-            flash('El estudiante no existe en la base de datos.', 'danger')
+            flash('El estudiante no existe en la base de datos.', 'danger') # aqui se genera el aviso de alerta si no existe el estudiante
             return "El estudiante no existe en la base de datos."
         libroCodigo = int(libroCodigo) 
         libro = Libro.query.filter_by(codigo=libroCodigo).first()
@@ -56,7 +56,7 @@ def registrar_prestamo():
         db.session.add(nuevo_prestamo)
         db.session.commit()
 
-        flash('Préstamo registrado con éxito.', 'success')
+        flash('Préstamo registrado con éxito.', 'success') #aqui se genera el aviso de alerta si el prestamo se registra exitosamente
         return redirect(url_for('registrar_prestamo'))
 
 
@@ -71,28 +71,7 @@ def registrar_multa():
         estudiante = request.form.get('estudiante')  # Nombre del estudiante
         codigo = request.form.get('codigo')  # Código del estudiante
         fecha_creacion = request.form.get('fecha_creacion')  # Fecha de creación de la multa
-
-        # Verificar si la fecha de creación es válida
-        try:
-            fecha_creacion = datetime.strptime(fecha_creacion, '%Y-%m-%d').date()
-        except ValueError:
-            flash('Fecha de creación no válida. Usa el formato YYYY-MM-DD.', 'danger')
-            return redirect(url_for('registrar_multa'))
-
-        # Verificar si el código del estudiante existe en la base de datos
-        libro1 = Libro.query.filter_by(codigo=codigo).first()  # Consultamos por el código del estudiante
-        estudiante1 = Estudiante.query.filter_by(codigo=estudiante).first()  # Consultamos por el nombre del estudiante
-
-        if not libro1 or not estudiante1:  # Si no existe el estudiante
-            flash('El estudiante no existe en la base de datos.', 'danger')
-            return render_template('multas.html')
-
-        # Verificar si el libro existe
-        libro = Libro.query.filter_by(codigo=libro).first()
-        if not libro:
-            flash('El libro no existe en la base de datos.', 'danger')
-            return render_template('multas.html')
-
+        fecha_creacion = datetime.strptime(fecha_creacion, '%Y-%m-%d')
         # Crear la nueva multa
         nueva_multa = Multa(libro=libro, usuario=estudiante, codigo=codigo, fecha_creacion=fecha_creacion)
         db.session.add(nueva_multa)
@@ -104,10 +83,7 @@ def registrar_multa():
         
     multas = Multa.query.all()
         
-    return render_template('multas.html', multas=multas)
-
-    # Si es una solicitud GET, solo se renderiza el formulario
- 
+    return render_template('multas.html', multas=multas) #Renderiza a la pagina de multas
 
 @app.route('/gestionMulta', methods=['GET', 'POST'])
 def gestionMulta():
@@ -145,7 +121,7 @@ def consultarMulta():
     # Consultar únicamente los datos de la tabla Prestamo
     multa = db.session.query(
         Multa.id.label('id'),
-        Multa.libro.label('libro'),  # Aquí obtienes el identificador del libro
+        Multa.libro.label('libro'), 
         Multa.usuario.label('usuario'),
         Multa.codigo.label('codigo'),
         Multa.fecha_creacion.label('fecha_creacion')
@@ -153,12 +129,12 @@ def consultarMulta():
     ).all()
     
     # Renderizar la plantilla con los datos
-    return render_template('consultarMulta.html', multa=multa)
+    return render_template('consultarMulta.html', multa=multa)  #Aqui renderiza a la pagina de Consultar la multa.
 
 
 @app.route('/informacionLibro', methods=['GET', 'POST'])
 def mostrarInformacion():
-    return render_template('informacionLibro.html')
+    return render_template('informacionLibro.html') #Aqui devuelve la información del
 
 @app.route('/registrarPrestamos', methods=['GET', 'POST'])
 def registrarPrestamos():
@@ -317,6 +293,12 @@ def consultarLibro2():
     
     # Renderizar la plantilla con los datos
     return render_template('consultarLibro2.html', libro=libro)
+@app.route('/registrarDevolucion', methods=['GET', 'POST'])
+def registrarDevolucion():
+    if request.method == 'POST':
+        flash('Préstamo registrado con éxito.')
+        return redirect(url_for('index'))
+    return render_template('registrarDevolucion.html')
 
 
 if __name__ == '__main__':
