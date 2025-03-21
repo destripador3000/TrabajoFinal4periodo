@@ -296,7 +296,6 @@ def consultarLibro2():
 @app.route('/registrarDevolucion', methods=['GET', 'POST'])
 def registrarDevolucion():
     if request.method == 'POST':
-        flash('Préstamo registrado con éxito.')
         return redirect(url_for('index'))
     return render_template('registrarDevolucion.html')
 
