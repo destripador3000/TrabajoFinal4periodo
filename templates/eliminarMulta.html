@@ -16,7 +16,7 @@
             <h1>eliminar libro</h1>
             <form action="{{ url_for('eliminarMulta') }}" method="POST">
                 <input type="number" class="form-control mb-3" name="codigo" placeholder="Código de libro" required>
-                <button type="submit" class="btn btn-danger">Eliminar multa</button>
+                <button type="submit" class="btn btn-danger">pagar multa</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
             <a href="{{ url_for('gestionMulta') }}" class="btn btn-light">volver</a>

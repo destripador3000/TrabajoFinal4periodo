@@ -15,28 +15,34 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th>id multa</th>
                             <th>libro</th>
                             <th>usuario</th>
                             <th>codigo</th>
                             <th>fecha creacion</th>
+                            <td>estado</td>
+
 
                         </tr>
                     </thead>
                     <tbody>
                         {% for multa in multa %}
                         <tr>
+                            <td>{{multa.id}}</td>
                             <td>{{ multa.libro }}</td>
                             <td>{{ multa.usuario }}</td>
                             <td>{{ multa.codigo }}</td>
                             <td>{{ multa.fecha_creacion}}</td>
+                            <td>{{multa.estado}}</td>
+                            
 
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
                 <form action="{{ url_for('eliminarMulta') }}" method="POST">
-                    <input type="number" class="form-control mb-3" name="codigo" placeholder="ID del préstamo (Para eliminar)" required>
-                    <button type="submit" class="btn btn-danger">Eliminar multa</button>
+                    <input type="number" class="form-control mb-3" name="codigo" placeholder="ID de la multa (Para pagar)" required>
+                    <button type="submit" class="btn btn-danger">pagar multa multa</button>
                 </form>  
             </div>                   
             <a href="{{ url_for('index') }}" class="btn btn-danger mt-3">Volver</a>
