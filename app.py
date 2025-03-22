@@ -30,7 +30,7 @@ def registrar_prestamo():
         codigo = request.form.get('codigo')  # El código del estudiante
         nombre=request.form.get('nombre') #Nombre del estudiante
         fecha = request.form.get('fecha') #fecha de creación
-
+        correo = request.form.get('correo') #correo del estudiante
         # Validar la fecha
         try:
             fecha = datetime.strptime(fecha, '%Y-%m-%d').date()
@@ -40,10 +40,9 @@ def registrar_prestamo():
 
         # Verificar si el código del estudiante existe en la base de datos
         c_estudiante = Estudiante.query.filter_by(codigo=codigo).first()  # Consultamos por el código del estudiante
-        n_estudiante = Estudiante.query.filter_by(nombre=nombre).first()  # Consultamos por el nombre del estudiante
 
     
-        if not c_estudiante and n_estudiante:
+        if not c_estudiante:
             flash('El estudiante no existe en la base de datos.', 'danger') # aqui se genera el aviso de alerta si no existe el estudiante
             return "El estudiante no existe en la base de datos."
         libroCodigo = int(libroCodigo) 
@@ -52,7 +51,7 @@ def registrar_prestamo():
             flash('El libro no existe en la base de datos.', 'danger')
             return redirect(url_for('registrar_prestamo'))
 
-        nuevo_prestamo = Prestamo(libro=libro.codigo, usuario=c_estudiante.nombre, fecha=fecha)
+        nuevo_prestamo = Prestamo(libro=libro.codigo, usuario=c_estudiante.nombre, fecha=fecha, correo=correo)
         db.session.add(nuevo_prestamo)
         db.session.commit()
 
@@ -173,7 +172,8 @@ def consultarPrestamo():
         Prestamo.id.label('id'),
         Prestamo.libro.label('libro'),  # Aquí obtienes el identificador del libro
         Prestamo.usuario.label('usuario'),
-        Prestamo.fecha.label('fecha')
+        Prestamo.fecha.label('fecha'),
+        Prestamo.correo.label('correo')
     ).all()
     
     # Renderizar la plantilla con los datos

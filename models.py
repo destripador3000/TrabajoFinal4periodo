@@ -10,11 +10,12 @@ class Prestamo(db.Model):
     libro = db.Column(db.String(255), nullable=False)
     usuario = db.Column(db.String(255), nullable=False)  # Aquí 'usuario' es el estudiante
     fecha = db.Column(db.Date, nullable=False)
-
-    def __init__(self, libro, usuario, fecha):
+    correo=db.Column(db.String(255), nullable=False)
+    def __init__(self, libro, usuario, fecha,correo):
         self.libro = libro
         self.usuario = usuario
         self.fecha = fecha
+        self.correo= correo
 
 class Multa(db.Model):
     __tablename__ = 'multas'
