@@ -17,12 +17,13 @@
                 <input type="number" class="form-control mb-3" name="libro" placeholder="Código Libro" required>
                 <input type="number" class="form-control mb-3" name="codigo" placeholder="Código Estudiante" required>
                 <input type="text" class="form-control mb-3" name="nombre" placeholder="Nombre Estudiante"  required > <!-- Se completa el nombre si el estudiante existe -->
+                <input type="email" class="form-control mb-3" name="correo" placeholder="Correo Estudiante"  required >
 
                 <input type="date" class="form-control mb-3" name="fecha" placeholder="Fecha (YYYY-MM-DD)" required>
                 <button type="submit" onclick="alertCrearPrestamo()" class="btn btn-danger">Registrar Préstamo</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
-            <a href="{{ url_for('prestamos') }}" class="btn btn-light">Volver</a>
+
         </div>
     </div>
     <img class="imagen" src="static/images/univalle.png" alt="">
