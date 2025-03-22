@@ -11,17 +11,17 @@
     <!-- Contenedor para centrar el contenido -->
     <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div class="text-center content-box">
-            <h1>Préstamos</h1>
-            <form action="{{ url_for('registrar_prestamo') }}" method="POST">
-                <a href="{{url_for('registrarPrestamos')}}" class="btn btn-danger">Registra Préstamo</a>
-                <a href="{{url_for('consultarPrestamo')}}"  class="btn btn-danger">Consultar Préstamo</a>
-                <a href="{{url_for('modificarPrestamo')}}"  class="btn btn-danger">modificar Préstamo</a>
-
-                <a href="{{url_for('registrarDevolucion')}}"  class="btn btn-danger">Registrar Devolución</a>
-            
+            <h1>Modificar Libro</h1>
+            <form action="{{ url_for('modificarLibro') }}" method="POST">
+                <input type="number" class="form-control mb-3"  name="codigo" placeholder="Código" required>
+                <input type="text" class="form-control mb-3" name="nombre" placeholder="Nombre" required>
+                <input type="text" class="form-control mb-3" name="autor" placeholder="Autor" required>
+              
+                <button type="submit" class="btn btn-danger">Modificar Libro</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
-            
+            <a href="{{ url_for('gestionLibro') }}" class="btn btn-light">Volver</a>
+
         </div>
     </div>
     <img class="imagen" src="static\images\univalle.png" alt="">
