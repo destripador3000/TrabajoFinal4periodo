@@ -179,7 +179,7 @@ def consultarPrestamo():
     # Renderizar la plantilla con los datos
     return render_template('consulta.html', prestamos=prestamos)
 
-   
+
 @app.route('/modificarPrestamo', methods=['GET', 'POST'])
 def modificarPrestamo():
     if request.method == 'POST':
@@ -299,6 +299,12 @@ def registrarDevolucion():
         return redirect(url_for('index'))
     return render_template('registrarDevolucion.html')
 
+@app.route('/modificarMulta', methods=['GET', 'POST'])
+def modificarMulta():
+    if request.method == 'POST':
+        flash('multa modificada con éxito.')
+        return redirect(url_for('index'))
+    return render_template('modificarMulta.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
