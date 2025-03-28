@@ -59,3 +59,23 @@ class Estudiante(db.Model):
 
     def __repr__(self):
         return f"<Estudiante {self.codigo} - {self.nombre}>"
+    
+class Devolucion(db.Model):
+    __tablename__ = 'Devolucion'
+    id = db.Column(db.Integer, primary_key=True)
+    IDLibro = db.Column(db.String(150), nullable=False)
+    nombreLibro= db.Column(db.String(150), nullable=False)
+    codigoEstudiante = db.Column(db.String(150), nullable=False)
+    nombreEstudiante = db.Column(db.String(150), nullable=False)
+    correoEstudiante = db.Column(db.String(150), nullable=False)
+    fechaDevolucion = db.Column(db.Date, nullable=False)
+
+    def __init__(self, IDLibro, nombreLibro, codigoEstudiante, nombreEstudiante, correoEstudiante, fechaDevolucion):
+        self.IDLibro = IDLibro
+        self.nombreLibro = nombreLibro              
+        self.codigoEstudiante = codigoEstudiante
+        self.nombreEstudiante = nombreEstudiante
+        self.correoEstudiante = correoEstudiante
+        self.fechaDevolucion = fechaDevolucion
+    def __repr__(self):
+        return f"<RegistrarDevolucion {self.IDlibro} - {self.nombreLibro}>"
