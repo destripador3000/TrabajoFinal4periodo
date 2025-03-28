@@ -14,15 +14,16 @@
         <div class="text-center content-box">
             <h1>Registrar Devolucion</h1>
             <form action="{{ url_for('registrarDevolucion') }}" method="POST">
-                <input type="number" class="form-control mb-3" name="libro" placeholder="Código Libro" required>
-                <input type="number" class="form-control mb-3" name="codigo" placeholder="Código Estudiante" required>
-                <input type="text" class="form-control mb-3" name="nombre" placeholder="Nombre Estudiante"  required > <!-- Se completa el nombre si el estudiante existe -->
-
-                <input type="date" class="form-control mb-3" name="fecha" placeholder="Fecha (YYYY-MM-DD)" required>
+                <input type="number" class="form-control mb-3" name="IDLibro" placeholder="Código Libro" required>
+                <input type="text" class="form-control mb-3" name="nombreLibro" placeholder="nombre del libro" required>
+                <input type="number" class="form-control mb-3" name="codigoEstudiante" placeholder="Código Estudiante" required>
+                <input type="text" class="form-control mb-3" name="nombreEstudiante" placeholder="Nombre Estudiante"  required > <!-- Se completa el nombre si el estudiante existe -->
+                <input type="email" class="form-control mb-3" name="correoEstudiante" placeholder="Correo Estudiante"  required >
+                <input type="date" class="form-control mb-3" name="fechaDevolucion" placeholder="Fecha (YYYY-MM-DD) devolucion" required>
                 <button type="submit" onclick="alertCrearPrestamo()" class="btn btn-danger">Registrar devolucion</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
-            <a href="{{ url_for('registrar_prestamo') }}" class="btn btn-light">Volver</a>
+            <a href="{{ url_for('devoluciones') }}" class="btn btn-light">Volver</a>
         </div>
     </div>
     <img class="imagen" src="static/images/univalle.png" alt="">

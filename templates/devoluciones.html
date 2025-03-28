@@ -11,16 +11,16 @@
     <!-- Contenedor para centrar el contenido -->
     <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div class="text-center content-box">
-            <h1>gestion de prestamos y devoluciones</h1>
-            <form action="{{ url_for('registrar_prestamo') }}" method="POST">
-                <a href="{{url_for('registrarPrestamos')}}" class="btn btn-danger">Registra Préstamo</a>
-                <a href="{{url_for('consultarPrestamo')}}"  class="btn btn-danger">Consultar Préstamo</a>
-                <a href="{{url_for('modificarPrestamo')}}"  class="btn btn-danger">modificar Préstamo</a>
+            <h1> devoluciones</h1>
+            <form action="{{ url_for('devoluciones') }}" method="POST">
+                <a href="{{url_for('registrarDevolucion')}}"  class="btn btn-danger">Registrar Devolución</a>
+                <a href="{{ url_for('modificarDevolucion') }}" class="btn btn-danger">Modificar Devolución</a>
 
-                <a href="{{url_for('devoluciones')}}"  class="btn btn-danger">Devoluciones</a>
-
+                <a href="{{url_for('consultarDevolucion')}}" class="btn btn-danger">Consultar Devolucion</a>
+                
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
+            <a href="{{ url_for('registrar_prestamo') }}" class="btn btn-light">volver</a>
             
         </div>
     </div>

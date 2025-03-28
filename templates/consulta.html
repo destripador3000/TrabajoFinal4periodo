@@ -43,7 +43,11 @@
                     <button type="submit" class="btn btn-danger">Eliminar Préstamo</button>
                 </form>  
             </div>                   
-            <a href="{{ url_for('index') }}" class="btn btn-danger mt-3">Volver</a>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="{{ url_for('index') }}" class="btn btn-danger">Inicio</a>
+                <a href="{{ url_for('registrar_prestamo') }}" class="btn btn-light">Volver</a>
+            </div>
+            
         </div>
     </div>
     <img class="imagen mt-4" src="{{ url_for('static', filename='images/univalle.png') }}" alt="Logo Univalle">
