@@ -39,7 +39,7 @@ class Libro(db.Model):
     nombre = db.Column(db.String(200), nullable=False)  # Título del libro
     autor = db.Column(db.String(100), nullable=False)  # Autor del libro
     disponibilidad =db.Column(db.String(10), nullable=False)
-
+    genero=db.Column(db.String(100), nullable=False)  # Género del libro
     def __repr__(self):
         return f"<Libro {self.codigo} - {self.nombre}>"
 
@@ -69,13 +69,15 @@ class Devolucion(db.Model):
     nombreEstudiante = db.Column(db.String(150), nullable=False)
     correoEstudiante = db.Column(db.String(150), nullable=False)
     fechaDevolucion = db.Column(db.Date, nullable=False)
+    estado = db.Column(db.String(150), nullable=False) 
 
-    def __init__(self, IDLibro, nombreLibro, codigoEstudiante, nombreEstudiante, correoEstudiante, fechaDevolucion):
+    def __init__(self, IDLibro, nombreLibro, codigoEstudiante, nombreEstudiante, correoEstudiante, fechaDevolucion,estado):
         self.IDLibro = IDLibro
         self.nombreLibro = nombreLibro              
         self.codigoEstudiante = codigoEstudiante
         self.nombreEstudiante = nombreEstudiante
         self.correoEstudiante = correoEstudiante
         self.fechaDevolucion = fechaDevolucion
+        self.estado=estado
     def __repr__(self):
         return f"<RegistrarDevolucion {self.IDlibro} - {self.nombreLibro}>"

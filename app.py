@@ -247,9 +247,10 @@ def agregarLibro():
         codigo = request.form.get('codigo')
         nombre = request.form.get('nombre')
         autor = request.form.get('autor')
+        genero=request.form.get('genero')
         # Crear una nueva instancia del modelo Libro
-        nuevo_libro = Libro(codigo=codigo, nombre=nombre, autor=autor, disponibilidad='si')  # Incluye 'disponibilidad' si es relevante
-    
+        nuevo_libro = Libro(codigo=codigo, nombre=nombre, autor=autor, disponibilidad='si',genero=genero) 
+        
         db.session.add(nuevo_libro)
         db.session.commit()
     
@@ -305,6 +306,7 @@ def modificarLibro():
             libro.nombre = request.form['nombre']
             libro.autor = request.form['autor']
             libro.disponibilidad = request.form['disponibilidad']
+            libro.genero = request.form['genero']
 
             db.session.commit()
             flash('Libro modificado con éxito.', 'success')
@@ -329,6 +331,7 @@ def consultarLibro2():
         Libro.nombre.label('nombre'),  # Aquí obtienes el identificador del libro
         Libro.autor.label('autor'),
         Libro.disponibilidad.label('disponibilidad'),
+        Libro.genero.label('genero')   
     ).all()
     
     # Renderizar la plantilla con los datos
@@ -345,6 +348,7 @@ def registrarDevolucion():
     
 
         fechaDevolucion = datetime.strptime(request.form['fechaDevolucion'], '%Y-%m-%d').date()
+        estado=request.form['estado']
 
         # Crear una instancia del modelo Devolucion
         nueva_devolucion = Devolucion(
@@ -353,7 +357,8 @@ def registrarDevolucion():
             codigoEstudiante=codigoEstudiante,
             nombreEstudiante=nombreEstudiante,
             correoEstudiante=correoEstudiante,
-            fechaDevolucion=fechaDevolucion
+            fechaDevolucion=fechaDevolucion,
+            estado=estado
         )
 
         # Agregar a la sesión y confirmar la transacción
@@ -374,7 +379,8 @@ def consultarDevolucion():
         Devolucion.codigoEstudiante.label('codigoEstudiante'),
         Devolucion.nombreEstudiante.label('nombreEstudiante'),
         Devolucion.correoEstudiante.label('correoEstudiante'),
-        Devolucion.fechaDevolucion.label('fechaDevolucion')
+        Devolucion.fechaDevolucion.label('fechaDevolucion'),
+        Devolucion.estado.label('estado')
     ).all()
     
     # Renderizar la plantilla con los datos
@@ -416,6 +422,7 @@ def modificarDevolucion():
                 # ✅ Convertir la fecha de string a date
                 fecha_texto = request.form['fechaDevolucion']
                 devolucion.fechaDevolucion = datetime.strptime(fecha_texto, '%Y-%m-%d').date()
+                devolucion.estado=request.form['estado']
 
                 db.session.commit()
                 flash('Devolución modificada con éxito.', 'success')
