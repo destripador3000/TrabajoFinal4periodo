@@ -25,10 +25,22 @@
                 <input type="text" class="form-control mb-3" name="codigo" value="{{ libro.codigo }}" required>
                 <input type="text" class="form-control mb-3" name="nombre" value="{{ libro.nombre }}" required>
                 <input type="text" class="form-control mb-3" name="autor" value="{{ libro.autor }}" required>
+                
+                <!-- Selección de Disponibilidad -->
                 <select class="form-control mb-3" name="disponibilidad" required>
                     <option value="Disponible" {% if libro.disponibilidad == 'Disponible' %}selected{% endif %}>Disponible</option>
                     <option value="No Disponible" {% if libro.disponibilidad == 'No Disponible' %}selected{% endif %}>No Disponible</option>
                 </select>
+                
+                <!-- Selección de Género -->
+                <select class="form-control mb-3" name="genero" required>
+                    <option value="ficcion" {% if libro.genero == 'ficcion' %}selected{% endif %}>Ficción</option>
+                    <option value="no_ficcion" {% if libro.genero == 'no_ficcion' %}selected{% endif %}>No Ficción</option>
+                    <option value="ciencia" {% if libro.genero == 'ciencia' %}selected{% endif %}>Ciencia</option>
+                    <option value="historia" {% if libro.genero == 'historia' %}selected{% endif %}>Historia</option>
+                    <option value="arte" {% if libro.genero == 'arte' %}selected{% endif %}>Arte</option>
+                </select>
+                
                 <button type="submit" name="modificar" class="btn btn-danger w-100">Modificar</button>
             </form>
             {% endif %}

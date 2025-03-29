@@ -28,6 +28,11 @@
                 <input type="text" class="form-control mb-3" name="nombreEstudiante" value="{{ devolucion.nombreEstudiante }}" required>
                 <input type="email" class="form-control mb-3" name="correoEstudiante" value="{{ devolucion.correoEstudiante }}" required>
                 <input type="date" class="form-control mb-3" name="fechaDevolucion" value="{{ devolucion.fechaDevolucion }}" required>
+                <select name="estado" class="form-control mb-3" required>
+                    <option value="En buen estado" {% if devolucion.estado == 'En buen estado' %}selected{% endif %}>En buen estado</option>
+                    <option value="Con daños menores" {% if devolucion.estado == 'Con daños menores' %}selected{% endif %}>Con daños menores</option>
+                    <option value="Con daños mayores" {% if devolucion.estado == 'Con daños mayores' %}selected{% endif %}>Con daños mayores</option>
+                </select>
                 <button type="submit" name="modificar" class="btn btn-danger w-100">Modificar</button>
             </form>
             {% endif %}

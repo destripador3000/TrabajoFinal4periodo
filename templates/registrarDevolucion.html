@@ -20,6 +20,12 @@
                 <input type="text" class="form-control mb-3" name="nombreEstudiante" placeholder="Nombre Estudiante"  required > <!-- Se completa el nombre si el estudiante existe -->
                 <input type="email" class="form-control mb-3" name="correoEstudiante" placeholder="Correo Estudiante"  required >
                 <input type="date" class="form-control mb-3" name="fechaDevolucion" placeholder="Fecha (YYYY-MM-DD) devolucion" required>
+                <select name="estado" class="form-control mb-3" required>
+                    <option value="" disabled selected>Seleccione el estado del libro</option>
+                    <option value="En buen estado">En buen estado</option>
+                    <option value="Con daños menores">Con daños menores</option>
+                    <option value="Con daños mayores">Con daños mayores</option>
+                </select>
                 <button type="submit" onclick="alertCrearPrestamo()" class="btn btn-danger">Registrar devolucion</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>

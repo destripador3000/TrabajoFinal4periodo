@@ -22,6 +22,7 @@
                             <th>Nombre Estudiante</th>
                             <th>Correo Estudiante</th>
                             <th>Fecha Devolución</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                             <td>{{ devolucion.nombreEstudiante }}</td>
                             <td>{{ devolucion.correoEstudiante }}</td>
                             <td>{{ devolucion.fechaDevolucion }}</td>
+                            <td>{{devolucion.estado}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

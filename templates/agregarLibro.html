@@ -13,10 +13,17 @@
         <div class="text-center content-box">
             <h1>Agregar Libro</h1>
             <form action="{{ url_for('agregarLibro') }}" method="POST">
-                <input type="number" class="form-control mb-3"  name="codigo" placeholder="Código" required>
+                <input type="number" class="form-control mb-3"  name="codigo" placeholder="id libro" required>
                 <input type="text" class="form-control mb-3" name="nombre" placeholder="Nombre" required>
                 <input type="text" class="form-control mb-3" name="autor" placeholder="Autor" required>
-              
+                <select class="form-control mb-3" name="genero" required>
+                    <option value="" disabled selected>Seleccione el tipo de libro</option>
+                    <option value="ficcion">Ficción</option>
+                    <option value="no_ficcion">No Ficción</option>
+                    <option value="ciencia">Ciencia</option>
+                    <option value="historia">Historia</option>
+                    <option value="arte">Arte</option> 
+                </select>
                 <button type="submit" class="btn btn-danger">Agregar Libro</button>
             </form>
             <a href="{{ url_for('index') }}" class="btn btn-light">Inicio</a>
