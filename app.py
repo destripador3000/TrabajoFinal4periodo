@@ -3,7 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from config import Config
 from datetime import datetime
 from models import Prestamo, db, Libro, Usuario, Estudiante, Multa,Devolucion # Importa db desde models.py
-
+import ssl
+import smtplib
+from email.message import EmailMessage
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -23,14 +25,17 @@ def logginPrincipal():
 def index():
     return render_template('index.html')
 
+
+
 @app.route('/registrar_prestamo', methods=['GET', 'POST'])
 def registrar_prestamo():
     if request.method == 'POST':
         libroCodigo = request.form.get('libro')
         codigo = request.form.get('codigo')  # El código del estudiante
-        nombre=request.form.get('nombre') #Nombre del estudiante
-        fecha = request.form.get('fecha') #fecha de creación
-        correo = request.form.get('correo') #correo del estudiante
+        nombre = request.form.get('nombre')  # Nombre del estudiante
+        fecha = request.form.get('fecha')  # Fecha de creación
+        correo = request.form.get('correo')  # Correo del estudiante
+
         # Validar la fecha
         try:
             fecha = datetime.strptime(fecha, '%Y-%m-%d').date()
@@ -41,28 +46,59 @@ def registrar_prestamo():
         # Verificar si el código del estudiante existe en la base de datos
         c_estudiante = Estudiante.query.filter_by(codigo=codigo).first()  # Consultamos por el código del estudiante
 
-    
         if not c_estudiante:
-            flash('El estudiante no existe en la base de datos.', 'danger') # aqui se genera el aviso de alerta si no existe el estudiante
+            flash('El estudiante no existe en la base de datos.', 'danger')  # Alerta si no existe el estudiante
             return "El estudiante no existe en la base de datos."
-        libroCodigo = int(libroCodigo) 
+        
+        libroCodigo = int(libroCodigo)
         libro = Libro.query.filter_by(codigo=libroCodigo).first()
         if not libro:
             flash('El libro no existe en la base de datos.', 'danger')
             return redirect(url_for('registrar_prestamo'))
 
+        # Registrar el nuevo préstamo
         nuevo_prestamo = Prestamo(libro=libro.codigo, usuario=c_estudiante.nombre, fecha=fecha, correo=correo)
         db.session.add(nuevo_prestamo)
         db.session.commit()
 
-        flash('Préstamo registrado con éxito.', 'success') #aqui se genera el aviso de alerta si el prestamo se registra exitosamente
-        return redirect(url_for('registrar_prestamo'))
+        # Enviar correo de confirmación si el campo de correo está presente
+        if correo:  # Si se proporciona un correo en el formulario
+            asunto = "Confirmación de Préstamo de Libro"
+            cuerpo = f"Hola {c_estudiante.nombre},\n\nTu préstamo del libro '{libro.nombre}' ha sido registrado con éxito el {fecha}.\n\nGracias por usar nuestra biblioteca."
 
+            # Función para enviar el correo
+            enviar_correo(correo, asunto, cuerpo)
+
+        flash('Préstamo registrado con éxito.', 'success')  # Alerta de éxito
+        return redirect(url_for('registrar_prestamo'))
 
     # Si es una solicitud GET, solo se renderiza el formulario
     prestamos = Prestamo.query.all()
     return render_template('prestamos.html', prestamos=prestamos)
-   
+
+
+# Función para enviar correo
+def enviar_correo(destinatario, asunto, cuerpo):
+    email_sender = "juan.torres.martinez@correounivalle.edu.co"  # Cambia con tu correo de envío
+    password = "qiod lmuo uaks xyvl"  # Cambia con tu contraseña de correo
+    context = ssl._create_unverified_context()  # Usar un contexto SSL sin verificación (por simplicidad)
+
+    # Crear mensaje de correo
+    em = EmailMessage()
+    em["From"] = email_sender
+    em["To"] = destinatario
+    em["Subject"] = asunto
+    em.set_content(cuerpo)
+
+    try:
+        # Enviar correo
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+            smtp.login(email_sender, password)
+            smtp.sendmail(email_sender, destinatario, em.as_string())
+        print("Correo enviado exitosamente")
+    except Exception as e:
+        print(f"Error al enviar correo: {e}")
+
 @app.route('/registrar_multa', methods=['GET', 'POST'])
 def registrar_multa():
     if request.method == 'POST':

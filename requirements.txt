@@ -1,3 +1,4 @@
 mariadb
 flask
 flask_sqlalchemy
+yagmail
